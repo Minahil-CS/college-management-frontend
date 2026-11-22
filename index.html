@@ -1,0 +1,2001 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex College of Science & Technology | Institutional Management Portal</title>
+    
+    <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome 6 CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        navy: {
+                            950: '#080E1E',
+                            900: '#0F172A',
+                            800: '#1E293B',
+                            700: '#1E3A8A',
+                            600: '#2563EB',
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(15, 23, 42, 0.06)',
+                        'card': '0 10px 30px -5px rgba(15, 23, 42, 0.08)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar & Utility Polish */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8FAFC;
+            color: #0F172A;
+            overflow-x: hidden;
+        }
+        h1, h2, h3, h4, .font-display {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        /* Subtle Hero Architectural Grid Pattern */
+        .hero-pattern {
+            background-color: #0F172A;
+            background-image: 
+                radial-gradient(at 85% 15%, rgba(30, 58, 138, 0.55) 0px, transparent 55%),
+                radial-gradient(at 15% 85%, rgba(16, 185, 129, 0.16) 0px, transparent 50%),
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+        }
+        /* Notice Ticker Animation */
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            display: flex;
+            width: max-content;
+            animation: marquee 32s linear infinite;
+        }
+        .animate-marquee:hover {
+            animation-play-state: paused;
+        }
+        /* Modal Backdrop Fade */
+        .modal-backdrop {
+            backdrop-filter: blur(6px);
+            transition: opacity 0.25s ease;
+        }
+        /* Active Nav Indicator */
+        .nav-link.active {
+            color: #2563EB;
+            font-weight: 600;
+        }
+        .nav-link.active::after {
+            content: '';
+            display: block;
+            height: 2px;
+            background: #2563EB;
+            border-radius: 999px;
+            margin-top: 2px;
+        }
+        /* Custom subtle scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F1F5F9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #CBD5E1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94A3B8;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-blue-600 selection:text-white">
+
+    <!-- ==========================================
+         TOP INSTITUTIONAL NOTICE TICKER BAR
+    =========================================== -->
+    <div class="bg-navy-950 text-slate-200 text-xs py-2 border-b border-slate-800 relative z-50 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-3">
+            <span class="shrink-0 inline-flex items-center gap-1.5 bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2.5 py-0.5 rounded-full font-semibold tracking-wide uppercase text-[10px]">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
+                Live Notices
+            </span>
+            <div class="overflow-hidden flex-1 mask-fade">
+                <div class="animate-marquee gap-12 whitespace-nowrap text-slate-300" id="notice-ticker">
+                    <span><strong class="text-white">Fall/Spring Admissions Open:</strong> Online applications close on 30th November. Apply via the Admissions Desk below.</span>
+                    <span><strong class="text-emerald-400">Exam Schedule:</strong> Mid-Semester Practical & Theory Date Sheet published on the Student Portal.</span>
+                    <span><strong class="text-amber-300">Tech Symposium 2026:</strong> Register early for the Inter-Collegiate AI & Robotics Hackathon — limited seats!</span>
+                    <span><strong class="text-white">Merit Scholarships:</strong> 100% tuition waiver applications open for students maintaining CGPA ≥ 3.85.</span>
+                    <!-- Duplicate for seamless loop -->
+                    <span><strong class="text-white">Fall/Spring Admissions Open:</strong> Online applications close on 30th November. Apply via the Admissions Desk below.</span>
+                    <span><strong class="text-emerald-400">Exam Schedule:</strong> Mid-Semester Practical & Theory Date Sheet published on the Student Portal.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         STICKY NAVIGATION HEADER
+    =========================================== -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 md:h-20">
+                
+                <!-- College Brand Identity -->
+                <a href="#overview" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 md:w-11 md:h-11 rounded-xl bg-gradient-to-br from-navy-900 via-navy-700 to-blue-600 flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
+                        <i class="fa-solid fa-graduation-cap text-lg md:text-xl text-amber-300"></i>
+                    </div>
+                    <div>
+                        <span class="font-display font-extrabold text-lg md:text-xl tracking-tight text-navy-900 block leading-none">
+                            APEX <span class="text-blue-700">COLLEGE</span>
+                        </span>
+                        <span class="text-[11px] font-medium text-slate-500 tracking-wider uppercase block mt-0.5">
+                            Science & Technology
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-slate-600" id="desktop-nav">
+                    <a href="#overview" class="nav-link active hover:text-blue-600 transition-colors py-1">Overview</a>
+                    <a href="#departments" class="nav-link hover:text-blue-600 transition-colors py-1">Departments</a>
+                    <a href="#courses" class="nav-link hover:text-blue-600 transition-colors py-1">Courses</a>
+                    <a href="#faculty" class="nav-link hover:text-blue-600 transition-colors py-1">Faculty</a>
+                    <a href="#students" class="nav-link hover:text-blue-600 transition-colors py-1">Students</a>
+                    <a href="#events" class="nav-link hover:text-blue-600 transition-colors py-1">Events</a>
+                    <a href="#admissions" class="nav-link hover:text-blue-600 transition-colors py-1">Admissions</a>
+                </nav>
+
+                <!-- Action Controls (Global Search + Portal Quick-View + Mobile Toggle) -->
+                <div class="flex items-center gap-2.5">
+                    <button onclick="openGlobalSearchModal()" title="Quick Search (Ctrl+K)" class="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200/80 text-slate-700 transition-colors flex items-center gap-2 text-xs font-medium">
+                        <i class="fa-solid fa-magnifying-glass text-slate-500"></i>
+                        <span class="hidden sm:inline text-slate-500">Quick Search</span>
+                        <kbd class="hidden xl:inline-block px-1.5 py-0.5 text-[10px] font-semibold text-slate-500 bg-white border border-slate-200 rounded">⌘K</kbd>
+                    </button>
+
+                    <button onclick="openPortalDrawer()" class="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-navy-900 hover:bg-navy-700 text-white text-xs sm:text-sm font-semibold shadow-sm transition-all">
+                        <i class="fa-solid fa-id-card-clip text-emerald-400"></i>
+                        <span>ERP Portal</span>
+                    </button>
+
+                    <!-- Hamburger Menu Button -->
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle Menu" class="lg:hidden p-2.5 rounded-xl text-slate-700 hover:bg-slate-100 transition-colors">
+                        <i class="fa-solid fa-bars text-lg" id="mobile-menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Navigation -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-slate-100 px-4 pt-3 pb-5 space-y-1.5 shadow-lg">
+            <a href="#overview" onclick="closeMobileMenu()" class="block px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-700">Overview</a>
+            <a href="#departments" onclick="closeMobileMenu()" class="block px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-700">Academic Departments</a>
+            <a href="#courses" onclick="closeMobileMenu()" class="block px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-700">Course Catalog</a>
+            <a href="#faculty" onclick="closeMobileMenu()" class="block px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-700">Faculty Directory</a>
+            <a href="#students" onclick="closeMobileMenu()" class="block px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-700">Student Portal & Records</a>
+            <a href="#events" onclick="closeMobileMenu()" class="block px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-700">Events & Calendar</a>
+            <a href="#admissions" onclick="closeMobileMenu()" class="block px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-700">Notices & Admissions</a>
+        </div>
+    </header>
+
+    <!-- ==========================================
+         1. HERO BANNER & INSTITUTIONAL STATS STRIP
+    =========================================== -->
+    <section id="overview" class="hero-pattern text-white relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-28">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+                
+                <!-- Left Hero Copy -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-sm text-xs font-medium text-emerald-300">
+                        <i class="fa-solid fa-award text-amber-400"></i>
+                        <span>HEC & ABET Accredited Premier Autonomous Institution • Est. 1998</span>
+                    </div>
+
+                    <h1 class="font-display text-3xl sm:text-5xl lg:text-[3.35rem] font-extrabold tracking-tight leading-[1.12]">
+                        Empowering Minds Through <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-teal-200 to-amber-200">Research, Innovation</span> & Academic Rigor.
+                    </h1>
+
+                    <p class="text-slate-300 text-base sm:text-lg max-w-2xl leading-relaxed">
+                        Welcome to the unified academic management portal of <strong class="text-white">Apex College of Science & Technology</strong>. Explore accredited degree programs, distinguished PhD faculty, live student academic records, and upcoming campus symposia.
+                    </p>
+
+                    <div class="flex flex-wrap items-center gap-3.5 pt-2">
+                        <a href="#courses" class="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-navy-950 font-bold text-sm shadow-lg shadow-emerald-500/20 transition-all">
+                            <span>Explore Programs</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                        <a href="#events" class="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 text-white font-semibold text-sm backdrop-blur-sm transition-all">
+                            <i class="fa-regular fa-calendar-check text-amber-300"></i>
+                            <span>Upcoming Events</span>
+                        </a>
+                        <button onclick="openAddStudentModal()" class="inline-flex items-center gap-2 px-4 py-3.5 rounded-xl text-slate-300 hover:text-white text-sm font-medium transition-colors">
+                            <i class="fa-solid fa-user-plus text-blue-400"></i>
+                            <span>+ Enroll Student</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Hero Architectural Campus Dashboard Card (Zero External Images) -->
+                <div class="lg:col-span-5">
+                    <div class="bg-slate-900/80 border border-slate-700/80 backdrop-blur-md rounded-2xl p-6 shadow-2xl space-y-5">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400">
+                                    <i class="fa-solid fa-chart-line"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-display font-bold text-white text-sm">Academic Session 2026–27</h3>
+                                    <p class="text-xs text-slate-400">Live Institutional Pulse</p>
+                                </div>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                                ● Semester Active
+                            </span>
+                        </div>
+
+                        <!-- Mini Interactive Campus Snapshot -->
+                        <div class="grid grid-cols-2 gap-3.5">
+                            <div class="p-3.5 rounded-xl bg-slate-800/70 border border-slate-700/60">
+                                <span class="text-xs text-slate-400 block">Research Grants</span>
+                                <span class="font-display font-bold text-xl text-white mt-0.5 block">$14.8M</span>
+                                <span class="text-[11px] text-emerald-400 mt-1 inline-block"><i class="fa-solid fa-arrow-trend-up"></i> +18% YoY</span>
+                            </div>
+                            <div class="p-3.5 rounded-xl bg-slate-800/70 border border-slate-700/60">
+                                <span class="text-xs text-slate-400 block">Avg. Campus Attendance</span>
+                                <span class="font-display font-bold text-xl text-white mt-0.5 block">91.4%</span>
+                                <span class="text-[11px] text-amber-300 mt-1 inline-block"><i class="fa-solid fa-check-circle"></i> Biometric Sync</span>
+                            </div>
+                        </div>
+
+                        <!-- SVG Campus Digital Crest / Vector Illustration -->
+                        <div class="p-4 rounded-xl bg-gradient-to-r from-navy-800 to-slate-800/90 border border-slate-700/70 flex items-center justify-between gap-4">
+                            <div class="space-y-1">
+                                <span class="text-[11px] uppercase tracking-wider text-amber-300 font-semibold">Next Major Milestone</span>
+                                <p class="text-sm font-semibold text-white">Annual Convocation & Tech Expo</p>
+                                <p class="text-xs text-slate-400">Main Auditorium • Nov 28, 2026</p>
+                            </div>
+                            <svg class="w-14 h-14 shrink-0 text-emerald-400" viewBox="0 0 64 64" fill="none">
+                                <circle cx="32" cy="32" r="28" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" opacity="0.5"/>
+                                <path d="M32 14L12 24L32 34L52 24L32 14Z" fill="rgba(16,185,129,0.2)" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                                <path d="M20 28V40C20 43.5 25.4 47 32 47C38.6 47 44 43.5 44 40V28" stroke="#FBBF24" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Institutional Quick Stats Strip -->
+            <div class="mt-14 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 sm:p-5 text-center hover:bg-white/10 transition-colors">
+                    <div class="font-display text-2xl sm:text-3xl font-extrabold text-white">12+</div>
+                    <div class="text-xs sm:text-sm text-slate-300 mt-1">Academic Departments</div>
+                </div>
+                <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 sm:p-5 text-center hover:bg-white/10 transition-colors">
+                    <div class="font-display text-2xl sm:text-3xl font-extrabold text-emerald-300">45+</div>
+                    <div class="text-xs sm:text-sm text-slate-300 mt-1">Accredited Programs</div>
+                </div>
+                <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 sm:p-5 text-center hover:bg-white/10 transition-colors">
+                    <div class="font-display text-2xl sm:text-3xl font-extrabold text-amber-300">180+</div>
+                    <div class="text-xs sm:text-sm text-slate-300 mt-1">PhD Research Faculty</div>
+                </div>
+                <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 sm:p-5 text-center hover:bg-white/10 transition-colors">
+                    <div class="font-display text-2xl sm:text-3xl font-extrabold text-white" id="hero-student-counter">6,500+</div>
+                    <div class="text-xs sm:text-sm text-slate-300 mt-1">Enrolled Students</div>
+                </div>
+                <div class="col-span-2 sm:col-span-1 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 sm:p-5 text-center hover:bg-white/10 transition-colors">
+                    <div class="font-display text-2xl sm:text-3xl font-extrabold text-emerald-400">96.4%</div>
+                    <div class="text-xs sm:text-sm text-slate-300 mt-1">Graduate Placement</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         2. ACADEMIC DEPARTMENTS DIRECTORY
+    =========================================== -->
+    <section id="departments" class="py-16 lg:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+            <div>
+                <span class="text-xs font-bold uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-200 px-3 py-1 rounded-full">
+                    Schools & Faculties
+                </span>
+                <h2 class="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-navy-900 mt-3">
+                    Academic Departments
+                </h2>
+                <p class="text-slate-600 mt-2 max-w-2xl text-sm sm:text-base">
+                    Multidisciplinary schools equipped with specialized research laboratories, industry partnerships, and outcome-based curricula.
+                </p>
+            </div>
+            <div class="text-xs font-medium text-slate-500 bg-white px-4 py-2.5 rounded-xl border border-slate-200 shadow-soft">
+                Showing <strong class="text-navy-900" id="dept-count-badge">6</strong> Core Schools • Click any card for Curriculum & Labs
+            </div>
+        </div>
+
+        <!-- Departments Grid (Populated via JS) -->
+        <div id="departments-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- JS Rendered -->
+        </div>
+    </section>
+
+    <!-- ==========================================
+         3. INTERACTIVE COURSE CATALOG
+    =========================================== -->
+    <section id="courses" class="py-16 lg:py-24 bg-slate-100/80 border-y border-slate-200/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">
+                        Academic Curriculum
+                    </span>
+                    <h2 class="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-navy-900 mt-3">
+                        Course Catalog & Degree Programs
+                    </h2>
+                    <p class="text-slate-600 mt-2 max-w-2xl text-sm sm:text-base">
+                        Filter courses by department, degree level, or search by course code and title to inspect credit hours, prerequisites, and syllabus outlines.
+                    </p>
+                </div>
+
+                <!-- Course Filters -->
+                <div class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+                    <div class="relative flex-1 sm:w-64">
+                        <i class="fa-solid fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                        <input type="text" id="course-search" oninput="filterCourses()" placeholder="Search code or course..." class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 shadow-sm">
+                    </div>
+
+                    <select id="course-dept-filter" onchange="filterCourses()" class="px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600 shadow-sm">
+                        <option value="ALL">All Departments</option>
+                        <option value="Computer Science & AI">Computer Science & AI</option>
+                        <option value="Data Science & Analytics">Data Science & Analytics</option>
+                        <option value="Electrical & Electronics">Electrical & Electronics</option>
+                        <option value="Business & Management">Business & Management</option>
+                        <option value="Biotechnology">Biotechnology</option>
+                        <option value="Mathematics & Physics">Mathematics & Physics</option>
+                    </select>
+
+                    <select id="course-level-filter" onchange="filterCourses()" class="px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600 shadow-sm">
+                        <option value="ALL">All Levels</option>
+                        <option value="BS">BS (Undergraduate)</option>
+                        <option value="MS">MS (Graduate)</option>
+                        <option value="PhD">PhD (Doctoral)</option>
+                        <option value="Diploma">Diploma / Cert</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Degree Level Quick Pills -->
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+                <div class="flex flex-wrap gap-2" id="course-level-pills">
+                    <button onclick="setCourseLevelPill('ALL')" data-level="ALL" class="course-pill active px-3.5 py-1.5 rounded-full text-xs font-semibold bg-navy-900 text-white transition-all">All Programs</button>
+                    <button onclick="setCourseLevelPill('BS')" data-level="BS" class="course-pill px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white text-slate-600 border border-slate-200 hover:border-slate-300 transition-all">BS Degrees</button>
+                    <button onclick="setCourseLevelPill('MS')" data-level="MS" class="course-pill px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white text-slate-600 border border-slate-200 hover:border-slate-300 transition-all">MS Programs</button>
+                    <button onclick="setCourseLevelPill('PhD')" data-level="PhD" class="course-pill px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white text-slate-600 border border-slate-200 hover:border-slate-300 transition-all">PhD Research</button>
+                    <button onclick="setCourseLevelPill('Diploma')" data-level="Diploma" class="course-pill px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white text-slate-600 border border-slate-200 hover:border-slate-300 transition-all">Executive Diplomas</button>
+                </div>
+                <span class="text-xs font-medium text-slate-500" id="course-result-count">Showing 12 courses</span>
+            </div>
+
+            <!-- Courses Grid -->
+            <div id="courses-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- JS Rendered -->
+            </div>
+
+            <!-- Empty State for Courses -->
+            <div id="courses-empty" class="hidden text-center py-12 bg-white rounded-2xl border border-slate-200">
+                <i class="fa-solid fa-book-open text-3xl text-slate-300 mb-3"></i>
+                <h3 class="font-display font-bold text-slate-800">No matching courses found</h3>
+                <p class="text-sm text-slate-500 mt-1">Try adjusting your department filter or search keywords.</p>
+                <button onclick="resetCourseFilters()" class="mt-4 px-4 py-2 rounded-xl bg-blue-600 text-white text-xs font-semibold hover:bg-blue-700">Reset Filters</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         4. FACULTY DIRECTORY
+    =========================================== -->
+    <section id="faculty" class="py-16 lg:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
+            <div>
+                <span class="text-xs font-bold uppercase tracking-wider text-amber-700 bg-amber-50 border border-amber-200 px-3 py-1 rounded-full">
+                    Academic Mentors
+                </span>
+                <h2 class="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-navy-900 mt-3">
+                    Distinguished Faculty Directory
+                </h2>
+                <p class="text-slate-600 mt-2 max-w-2xl text-sm sm:text-base">
+                    Connect with our doctoral researchers, professors, and academic advisors. View office hours, research specializations, and publications.
+                </p>
+            </div>
+
+            <!-- Faculty Search & Department Filter -->
+            <div class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+                <div class="relative flex-1 sm:w-64">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <input type="text" id="faculty-search" oninput="filterFaculty()" placeholder="Search professor or research..." class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 shadow-sm">
+                </div>
+                <select id="faculty-dept-filter" onchange="filterFaculty()" class="px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600 shadow-sm">
+                    <option value="ALL">All Departments</option>
+                    <option value="Computer Science & AI">Computer Science & AI</option>
+                    <option value="Data Science & Analytics">Data Science & Analytics</option>
+                    <option value="Electrical & Electronics">Electrical & Electronics</option>
+                    <option value="Business & Management">Business & Management</option>
+                    <option value="Biotechnology">Biotechnology</option>
+                    <option value="Mathematics & Physics">Mathematics & Physics</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Faculty Cards Grid -->
+        <div id="faculty-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- JS Rendered -->
+        </div>
+
+        <div id="faculty-empty" class="hidden text-center py-12 bg-white rounded-2xl border border-slate-200">
+            <i class="fa-solid fa-user-tie text-3xl text-slate-300 mb-3"></i>
+            <h3 class="font-display font-bold text-slate-800">No faculty members matched</h3>
+            <p class="text-sm text-slate-500 mt-1">Clear filters to browse all department faculty.</p>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         5. STUDENT PORTAL, DIRECTORY & GPA TOOL
+    =========================================== -->
+    <section id="students" class="py-16 lg:py-24 bg-navy-900 text-white relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            
+            <!-- Header & Action Buttons -->
+            <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-300 bg-emerald-500/15 border border-emerald-500/30 px-3 py-1 rounded-full">
+                        Student Information System (SIS)
+                    </span>
+                    <h2 class="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white mt-3">
+                        Student Academic Directory & Leaderboard
+                    </h2>
+                    <p class="text-slate-300 mt-2 max-w-2xl text-sm sm:text-base">
+                        Monitor semester performance, attendance compliance, and academic standing. Add a new student record or inspect individual digital transcripts.
+                    </p>
+                </div>
+
+                <div class="flex flex-wrap gap-3">
+                    <button onclick="openGpaCalculatorModal()" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-amber-300 text-sm font-semibold transition-all">
+                        <i class="fa-solid fa-calculator"></i>
+                        <span>Quick SGPA Calculator</span>
+                    </button>
+                    <button onclick="openAddStudentModal()" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-navy-950 text-sm font-bold shadow-lg shadow-emerald-500/20 transition-all">
+                        <i class="fa-solid fa-user-plus"></i>
+                        <span>+ Add Student Record</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filter Bar -->
+            <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-4 mb-6 flex flex-col md:flex-row gap-3 items-center justify-between">
+                <div class="relative w-full md:w-72">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <input type="text" id="student-search" oninput="filterStudents()" placeholder="Search Roll No or Student Name..." class="w-full pl-10 pr-4 py-2 rounded-xl bg-slate-900 border border-slate-700 text-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-400">
+                </div>
+
+                <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
+                    <select id="student-dept-filter" onchange="filterStudents()" class="flex-1 md:flex-none px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-400">
+                        <option value="ALL">All Departments</option>
+                        <option value="Computer Science & AI">Computer Science & AI</option>
+                        <option value="Data Science & Analytics">Data Science & Analytics</option>
+                        <option value="Electrical & Electronics">Electrical & Electronics</option>
+                        <option value="Business & Management">Business & Management</option>
+                        <option value="Biotechnology">Biotechnology</option>
+                        <option value="Mathematics & Physics">Mathematics & Physics</option>
+                    </select>
+
+                    <select id="student-sem-filter" onchange="filterStudents()" class="flex-1 md:flex-none px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-400">
+                        <option value="ALL">All Semesters</option>
+                        <option value="Semester 1">Semester 1</option>
+                        <option value="Semester 3">Semester 3</option>
+                        <option value="Semester 5">Semester 5</option>
+                        <option value="Semester 7">Semester 7</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Responsive Student Records Table -->
+            <div class="bg-slate-800/60 border border-slate-700/80 rounded-2xl overflow-hidden shadow-xl">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-900/90 text-slate-400 text-xs uppercase tracking-wider border-b border-slate-700">
+                                <th class="py-4 px-5 font-semibold">Roll No</th>
+                                <th class="py-4 px-5 font-semibold">Student Name</th>
+                                <th class="py-4 px-5 font-semibold">Program & Dept</th>
+                                <th class="py-4 px-5 font-semibold">Semester</th>
+                                <th class="py-4 px-5 font-semibold">CGPA</th>
+                                <th class="py-4 px-5 font-semibold">Attendance</th>
+                                <th class="py-4 px-5 font-semibold">Status</th>
+                                <th class="py-4 px-5 font-semibold text-right">Transcript</th>
+                            </tr>
+                        </thead>
+                        <tbody id="students-table-body" class="divide-y divide-slate-700/60 text-sm">
+                            <!-- JS Rendered -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="students-empty" class="hidden text-center py-10 text-slate-400">
+                    No student records match your current filter criteria.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         6. CAMPUS EVENTS & ACADEMIC CALENDAR
+    =========================================== -->
+    <section id="events" class="py-16 lg:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
+            <div>
+                <span class="text-xs font-bold uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-200 px-3 py-1 rounded-full">
+                    Campus Life & Symposia
+                </span>
+                <h2 class="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-navy-900 mt-3">
+                    Campus Events & Academic Calendar
+                </h2>
+                <p class="text-slate-600 mt-2 max-w-2xl text-sm sm:text-base">
+                    Reserve your seat for upcoming technical hackathons, research seminars, career workshops, and cultural festivals with live seat tracking.
+                </p>
+            </div>
+
+            <!-- Event Category Filter Buttons -->
+            <div class="flex flex-wrap gap-2" id="event-category-filters">
+                <button onclick="filterEvents('ALL')" data-cat="ALL" class="event-cat-btn active px-3.5 py-2 rounded-xl text-xs font-semibold bg-navy-900 text-white transition-all">All Events</button>
+                <button onclick="filterEvents('Tech Symposium')" data-cat="Tech Symposium" class="event-cat-btn px-3.5 py-2 rounded-xl text-xs font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition-all">Tech Symposium</button>
+                <button onclick="filterEvents('Workshop')" data-cat="Workshop" class="event-cat-btn px-3.5 py-2 rounded-xl text-xs font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition-all">Workshops</button>
+                <button onclick="filterEvents('Seminar')" data-cat="Seminar" class="event-cat-btn px-3.5 py-2 rounded-xl text-xs font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition-all">Seminars</button>
+                <button onclick="filterEvents('Cultural')" data-cat="Cultural" class="event-cat-btn px-3.5 py-2 rounded-xl text-xs font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition-all">Cultural</button>
+                <button onclick="filterEvents('Admissions')" data-cat="Admissions" class="event-cat-btn px-3.5 py-2 rounded-xl text-xs font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition-all">Admissions</button>
+            </div>
+        </div>
+
+        <!-- Events Grid -->
+        <div id="events-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- JS Rendered -->
+        </div>
+    </section>
+
+    <!-- ==========================================
+         7. NOTICE BOARD, FACILITIES & ADMISSION DESK
+    =========================================== -->
+    <section id="admissions" class="py-16 lg:py-24 bg-slate-100/90 border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-12 gap-10">
+                
+                <!-- Left Column: Official Notice Board & Campus Infrastructure -->
+                <div class="lg:col-span-6 space-y-8">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-amber-700 bg-amber-100 border border-amber-200 px-3 py-1 rounded-full">
+                            Circulars & Announcements
+                        </span>
+                        <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-navy-900 mt-3">
+                            Institutional Notice Board
+                        </h2>
+                    </div>
+
+                    <div class="space-y-3.5" id="notice-board-list">
+                        <!-- Notice Item 1 -->
+                        <div class="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-soft flex items-start gap-4 hover:border-blue-300 transition-colors">
+                            <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-700 flex flex-col items-center justify-center shrink-0 font-display font-bold leading-tight border border-blue-100">
+                                <span class="text-sm">22</span>
+                                <span class="text-[10px] uppercase">NOV</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between gap-2">
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-blue-700">Examination Cell</span>
+                                    <span class="text-[11px] px-2 py-0.5 rounded-full bg-rose-50 text-rose-600 font-semibold">Urgent</span>
+                                </div>
+                                <h4 class="font-display font-bold text-navy-900 text-sm sm:text-base mt-0.5">Fall/Spring Mid-Semester Practical Evaluation Roster</h4>
+                                <p class="text-xs text-slate-600 mt-1">All BS & MS students must verify their lab batch timings and bring validated smart ID cards.</p>
+                            </div>
+                        </div>
+
+                        <!-- Notice Item 2 -->
+                        <div class="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-soft flex items-start gap-4 hover:border-emerald-300 transition-colors">
+                            <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-700 flex flex-col items-center justify-center shrink-0 font-display font-bold leading-tight border border-emerald-100">
+                                <span class="text-sm">25</span>
+                                <span class="text-[10px] uppercase">NOV</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between gap-2">
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-700">Financial Aid & Scholarships</span>
+                                    <span class="text-[11px] px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-semibold">Open</span>
+                                </div>
+                                <h4 class="font-display font-bold text-navy-900 text-sm sm:text-base mt-0.5">Dean's Honor List & Merit Fellowship Applications</h4>
+                                <p class="text-xs text-slate-600 mt-1">Students with SGPA ≥ 3.80 are eligible for up to 100% tuition fee waiver for the upcoming term.</p>
+                            </div>
+                        </div>
+
+                        <!-- Notice Item 3 -->
+                        <div class="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-soft flex items-start gap-4 hover:border-amber-300 transition-colors">
+                            <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-700 flex flex-col items-center justify-center shrink-0 font-display font-bold leading-tight border border-amber-100">
+                                <span class="text-sm">30</span>
+                                <span class="text-[10px] uppercase">NOV</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between gap-2">
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-amber-700">Central Library & HPC Lab</span>
+                                    <span class="text-[11px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 font-semibold">Facility</span>
+                                </div>
+                                <h4 class="font-display font-bold text-navy-900 text-sm sm:text-base mt-0.5">24/7 Digital Library & GPU Compute Cluster Access</h4>
+                                <p class="text-xs text-slate-600 mt-1">Extended night access enabled for Final Year Project (FYP) and Doctoral research scholars.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Campus Facilities Highlights -->
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
+                        <div class="bg-white p-3.5 rounded-xl border border-slate-200 text-center">
+                            <i class="fa-solid fa-server text-blue-600 text-lg mb-1.5"></i>
+                            <div class="font-display font-bold text-xs text-navy-900">NVIDIA DGX AI Lab</div>
+                            <div class="text-[11px] text-slate-500">High-Performance Compute</div>
+                        </div>
+                        <div class="bg-white p-3.5 rounded-xl border border-slate-200 text-center">
+                            <i class="fa-solid fa-book-atlas text-emerald-600 text-lg mb-1.5"></i>
+                            <div class="font-display font-bold text-xs text-navy-900">120k+ E-Journals</div>
+                            <div class="text-[11px] text-slate-500">IEEE, ACM & Springer</div>
+                        </div>
+                        <div class="col-span-2 sm:col-span-1 bg-white p-3.5 rounded-xl border border-slate-200 text-center">
+                            <i class="fa-solid fa-rocket text-amber-500 text-lg mb-1.5"></i>
+                            <div class="font-display font-bold text-xs text-navy-900">Startup Incubator</div>
+                            <div class="text-[11px] text-slate-500">$500k Seed Fund Pool</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Interactive Admission Inquiry & Counseling Form -->
+                <div class="lg:col-span-6">
+                    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-card">
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-10 h-10 rounded-xl bg-navy-900 text-emerald-400 flex items-center justify-center">
+                                <i class="fa-solid fa-paper-plane"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-display text-xl sm:text-2xl font-extrabold text-navy-900">Admission & Academic Inquiry</h3>
+                                <p class="text-xs text-slate-500">Receive brochure, fee structure & counselor callback</p>
+                            </div>
+                        </div>
+
+                        <form id="admission-form" onsubmit="handleAdmissionSubmit(event)" class="space-y-4 mt-6" novalidate>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1.5">Applicant Full Name *</label>
+                                    <input type="text" id="adm-name" required placeholder="e.g. Ayesha Siddiqui" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1.5">Email Address *</label>
+                                    <input type="email" id="adm-email" required placeholder="ayesha@example.com" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1.5">Phone Number *</label>
+                                    <input type="tel" id="adm-phone" required placeholder="+92 300 1234567" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1.5">Preferred Program *</label>
+                                    <select id="adm-program" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-700 bg-white focus:outline-none focus:ring-2 focus:ring-blue-600">
+                                        <option value="">Select Degree Program...</option>
+                                        <option value="BS Artificial Intelligence">BS Artificial Intelligence</option>
+                                        <option value="BS Computer Science">BS Computer Science</option>
+                                        <option value="BS Data Science">BS Data Science & Analytics</option>
+                                        <option value="BS Electrical Engineering">BS Electrical & Electronics</option>
+                                        <option value="BBA / MBA Executive">BBA / MBA Technology Mgmt</option>
+                                        <option value="BS Biotechnology">BS Biotechnology</option>
+                                        <option value="MS / PhD Research">MS / PhD Graduate Research</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1.5">Academic Background / Inquiry Message</label>
+                                <textarea id="adm-message" rows="3" placeholder="Share your previous qualification (FSc / A-Levels / BS) or scholarship questions..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"></textarea>
+                            </div>
+
+                            <div id="admission-error" class="hidden text-xs font-medium text-rose-600 bg-rose-50 border border-rose-200 px-3.5 py-2 rounded-xl"></div>
+
+                            <button type="submit" class="w-full py-3.5 px-6 rounded-xl bg-navy-900 hover:bg-navy-700 text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2">
+                                <span>Submit Application Inquiry</span>
+                                <i class="fa-solid fa-arrow-right text-emerald-400"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         INSTITUTIONAL FOOTER
+    =========================================== -->
+    <footer class="bg-navy-950 text-slate-400 pt-14 pb-8 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-10 border-b border-slate-800">
+                <div class="space-y-3">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center text-white">
+                            <i class="fa-solid fa-graduation-cap text-amber-300"></i>
+                        </div>
+                        <span class="font-display font-extrabold text-lg text-white">APEX COLLEGE</span>
+                    </div>
+                    <p class="text-xs leading-relaxed text-slate-400">
+                        Apex College of Science & Technology — Cultivating ethical engineers, data scientists, and visionary leaders since 1998.
+                    </p>
+                    <div class="flex gap-3 pt-1">
+                        <a href="#overview" aria-label="LinkedIn" class="w-8 h-8 rounded-lg bg-slate-900 hover:bg-blue-600 text-slate-300 hover:text-white flex items-center justify-center transition-colors"><i class="fa-brands fa-linkedin-in text-xs"></i></a>
+                        <a href="#overview" aria-label="GitHub" class="w-8 h-8 rounded-lg bg-slate-900 hover:bg-blue-600 text-slate-300 hover:text-white flex items-center justify-center transition-colors"><i class="fa-brands fa-github text-xs"></i></a>
+                        <a href="#overview" aria-label="X Twitter" class="w-8 h-8 rounded-lg bg-slate-900 hover:bg-blue-600 text-slate-300 hover:text-white flex items-center justify-center transition-colors"><i class="fa-brands fa-x-twitter text-xs"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-display font-bold text-white text-sm mb-3">Quick Navigation</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#departments" class="hover:text-emerald-400 transition-colors">Academic Departments</a></li>
+                        <li><a href="#courses" class="hover:text-emerald-400 transition-colors">Undergraduate & MS Catalog</a></li>
+                        <li><a href="#faculty" class="hover:text-emerald-400 transition-colors">Research Faculty</a></li>
+                        <li><a href="#students" class="hover:text-emerald-400 transition-colors">Student ERP & Records</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-display font-bold text-white text-sm mb-3">Student Services</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><button onclick="openGpaCalculatorModal()" class="hover:text-emerald-400 transition-colors">SGPA / CGPA Calculator</button></li>
+                        <li><button onclick="openPortalDrawer()" class="hover:text-emerald-400 transition-colors">ERP Quick-View Drawer</button></li>
+                        <li><a href="#events" class="hover:text-emerald-400 transition-colors">Event RSVP & Symposia</a></li>
+                        <li><a href="#admissions" class="hover:text-emerald-400 transition-colors">Scholarships & Financial Aid</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-display font-bold text-white text-sm mb-3">Main Campus Contact</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-location-dot text-emerald-400 mt-0.5"></i><span>Academic Boulevard, Knowledge Park, Sector H-12</span></li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-emerald-400"></i><span>+92 (41) 889-4200 • Admissions Ext. 104</span></li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-envelope text-emerald-400"></i><span>registrar@apexcollege.edu.pk</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+                <p>© 2026 Apex College of Science & Technology. All rights reserved.</p>
+                <p>Task 13: College Management System Frontend • Built with HTML, Tailwind CSS & Vanilla JS</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==========================================
+         UNIVERSAL DETAIL MODAL (Departments / Courses / Faculty / Transcript)
+    =========================================== -->
+    <div id="universal-modal" class="hidden fixed inset-0 z-50 bg-slate-950/70 modal-backdrop flex items-center justify-center p-4" onclick="closeUniversalModal(event)">
+        <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200 animate-[fadeIn_0.2s_ease-out]" onclick="event.stopPropagation()">
+            <div class="sticky top-0 bg-white/95 backdrop-blur-md px-6 py-4 border-b border-slate-100 flex items-center justify-between z-10">
+                <span id="modal-badge" class="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-blue-50 text-blue-700">Details</span>
+                <button onclick="closeUniversalModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div id="modal-body" class="p-6 sm:p-8">
+                <!-- Dynamic Modal Content -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         ADD NEW STUDENT RECORD MODAL
+    =========================================== -->
+    <div id="add-student-modal" class="hidden fixed inset-0 z-50 bg-slate-950/70 modal-backdrop flex items-center justify-center p-4" onclick="closeAddStudentModal(event)">
+        <div class="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden" onclick="event.stopPropagation()">
+            <div class="bg-navy-900 px-6 py-4 flex items-center justify-between text-white">
+                <div class="flex items-center gap-2.5">
+                    <i class="fa-solid fa-user-plus text-emerald-400"></i>
+                    <h3 class="font-display font-bold text-base">Enroll New Student Record</h3>
+                </div>
+                <button onclick="closeAddStudentModal()" class="text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <form onsubmit="handleAddStudent(event)" class="p-6 space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Roll Number *</label>
+                        <input type="text" id="new-stu-roll" required placeholder="e.g. APX-26-109" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Full Name *</label>
+                        <input type="text" id="new-stu-name" required placeholder="e.g. Bilal Tariq" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Department *</label>
+                        <select id="new-stu-dept" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm bg-white focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                            <option value="Computer Science & AI">Computer Science & AI</option>
+                            <option value="Data Science & Analytics">Data Science & Analytics</option>
+                            <option value="Electrical & Electronics">Electrical & Electronics</option>
+                            <option value="Business & Management">Business & Management</option>
+                            <option value="Biotechnology">Biotechnology</option>
+                            <option value="Mathematics & Physics">Mathematics & Physics</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Semester *</label>
+                        <select id="new-stu-sem" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm bg-white focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                            <option value="Semester 1">Semester 1</option>
+                            <option value="Semester 3">Semester 3</option>
+                            <option value="Semester 5">Semester 5</option>
+                            <option value="Semester 7">Semester 7</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Current CGPA (0.00 - 4.00) *</label>
+                        <input type="number" step="0.01" min="0" max="4.0" id="new-stu-cgpa" required placeholder="3.75" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Attendance % (0 - 100) *</label>
+                        <input type="number" min="0" max="100" id="new-stu-att" required placeholder="94" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                    </div>
+                </div>
+                <div class="pt-2 flex justify-end gap-2.5">
+                    <button type="button" onclick="closeAddStudentModal()" class="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-600 text-xs font-semibold hover:bg-slate-50">Cancel</button>
+                    <button type="submit" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-sm">Save to Directory</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         SGPA CALCULATOR MODAL
+    =========================================== -->
+    <div id="gpa-modal" class="hidden fixed inset-0 z-50 bg-slate-950/70 modal-backdrop flex items-center justify-center p-4" onclick="closeGpaCalculatorModal(event)">
+        <div class="bg-white rounded-3xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden" onclick="event.stopPropagation()">
+            <div class="bg-navy-900 px-6 py-4 flex items-center justify-between text-white">
+                <div class="flex items-center gap-2.5">
+                    <i class="fa-solid fa-calculator text-amber-400"></i>
+                    <h3 class="font-display font-bold text-base">Semester GPA (SGPA) Estimator</h3>
+                </div>
+                <button onclick="closeGpaCalculatorModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="p-6 space-y-4">
+                <p class="text-xs text-slate-500">Enter credit hours and expected grade points (4.00 scale) for up to 4 courses to compute your projected SGPA.</p>
+                <div id="gpa-rows" class="space-y-2.5">
+                    <!-- 4 Course Rows -->
+                    <div class="grid grid-cols-12 gap-2 items-center">
+                        <span class="col-span-5 text-xs font-semibold text-slate-700">Course 1 (Core)</span>
+                        <input type="number" value="4" min="1" max="5" class="gpa-cred col-span-3 px-2.5 py-1.5 rounded-lg border border-slate-200 text-xs" placeholder="Credits">
+                        <select class="gpa-grade col-span-4 px-2.5 py-1.5 rounded-lg border border-slate-200 text-xs bg-white">
+                            <option value="4.0">A / A+ (4.00)</option>
+                            <option value="3.7">A- (3.70)</option>
+                            <option value="3.3">B+ (3.30)</option>
+                            <option value="3.0">B (3.00)</option>
+                            <option value="2.7">B- (2.70)</option>
+                            <option value="2.0">C (2.00)</option>
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-12 gap-2 items-center">
+                        <span class="col-span-5 text-xs font-semibold text-slate-700">Course 2 (Core)</span>
+                        <input type="number" value="3" min="1" max="5" class="gpa-cred col-span-3 px-2.5 py-1.5 rounded-lg border border-slate-200 text-xs" placeholder="Credits">
+                        <select class="gpa-grade col-span-4 px-2.5 py-1.5 rounded-lg border border-slate-200 text-xs bg-white">
+                            <option value="4.0">A / A+ (4.00)</option>
+                            <option value="3.7" selected>A- (3.70)</option>
+                            <option value="3.3">B+ (3.30)</option>
+                            <option value="3.0">B (3.00)</option>
+                            <option value="2.7">B- (2.70)</option>
+                            <option value="2.0">C (2.00)</option>
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-12 gap-2 items-center">
+                        <span class="col-span-5 text-xs font-semibold text-slate-700">Course 3 (Lab)</span>
+                        <input type="number" value="3" min="1" max="5" class="gpa-cred col-span-3 px-2.5 py-1.5 rounded-lg border border-slate-200 text-xs" placeholder="Credits">
+                        <select class="gpa-grade col-span-4 px-2.5 py-1.5 rounded-lg border border-slate-200 text-xs bg-white">
+                            <option value="4.0" selected>A / A+ (4.00)</option>
+                            <option value="3.7">A- (3.70)</option>
+                            <option value="3.3">B+ (3.30)</option>
+                            <option value="3.0">B (3.00)</option>
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-12 gap-2 items-center">
+                        <span class="col-span-5 text-xs font-semibold text-slate-700">Course 4 (Elective)</span>
+                        <input type="number" value="3" min="1" max="5" class="gpa-cred col-span-3 px-2.5 py-1.5 rounded-lg border border-slate-200 text-xs" placeholder="Credits">
+                        <select class="gpa-grade col-span-4 px-2.5 py-1.5 rounded-lg border border-slate-200 text-xs bg-white">
+                            <option value="4.0">A / A+ (4.00)</option>
+                            <option value="3.7">A- (3.70)</option>
+                            <option value="3.3" selected>B+ (3.30)</option>
+                            <option value="3.0">B (3.00)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-slate-500 block">Calculated SGPA</span>
+                        <span id="gpa-result-value" class="font-display text-2xl font-extrabold text-navy-900">3.78</span>
+                    </div>
+                    <span id="gpa-standing-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">Dean's Honor List</span>
+                </div>
+
+                <button onclick="calculateSGPA()" class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold">Recalculate SGPA</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         GLOBAL QUICK SEARCH MODAL (Ctrl+K)
+    =========================================== -->
+    <div id="search-modal" class="hidden fixed inset-0 z-50 bg-slate-950/70 modal-backdrop flex items-start justify-center pt-16 p-4" onclick="closeGlobalSearchModal(event)">
+        <div class="bg-white rounded-2xl max-w-xl w-full shadow-2xl border border-slate-200 overflow-hidden" onclick="event.stopPropagation()">
+            <div class="p-4 border-b border-slate-100 flex items-center gap-3">
+                <i class="fa-solid fa-magnifying-glass text-blue-600"></i>
+                <input type="text" id="global-search-input" oninput="runGlobalSearch(this.value)" placeholder="Search departments, courses, faculty, or students..." class="w-full text-sm focus:outline-none text-slate-800">
+                <button onclick="closeGlobalSearchModal()" class="text-xs text-slate-400 hover:text-slate-700 px-2 py-1 rounded bg-slate-100">ESC</button>
+            </div>
+            <div id="global-search-results" class="max-h-80 overflow-y-auto p-3 space-y-2 text-sm">
+                <p class="text-xs text-slate-400 text-center py-6">Start typing to search across the entire Apex College database...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         ERP PORTAL QUICK-VIEW SLIDE DRAWER
+    =========================================== -->
+    <div id="portal-drawer-backdrop" class="hidden fixed inset-0 z-50 bg-slate-950/60 modal-backdrop" onclick="closePortalDrawer()">
+        <div class="fixed right-0 top-0 bottom-0 w-full max-w-md bg-white shadow-2xl p-6 overflow-y-auto flex flex-col justify-between" onclick="event.stopPropagation()">
+            <div class="space-y-6">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-9 h-9 rounded-xl bg-navy-900 text-emerald-400 flex items-center justify-center">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-display font-bold text-navy-900 text-base">Apex ERP Command Center</h3>
+                            <p class="text-[11px] text-slate-500">Role-Based Quick Access</p>
+                        </div>
+                    </div>
+                    <button onclick="closePortalDrawer()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <!-- Role Switcher Tabs -->
+                <div class="grid grid-cols-2 gap-2 bg-slate-100 p-1 rounded-xl">
+                    <button onclick="switchPortalRole('student')" id="role-btn-student" class="py-2 rounded-lg text-xs font-bold bg-white text-navy-900 shadow-sm">Student View</button>
+                    <button onclick="switchPortalRole('admin')" id="role-btn-admin" class="py-2 rounded-lg text-xs font-semibold text-slate-600">Admin / Registrar</button>
+                </div>
+
+                <!-- Portal Dynamic View -->
+                <div id="portal-drawer-content" class="space-y-4">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+
+            <div class="pt-6 border-t border-slate-100 text-[11px] text-slate-400 flex items-center justify-between">
+                <span>Session ID: APX-2026-8841</span>
+                <span class="text-emerald-600 font-semibold">● Encrypted TLS 1.3</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         TOAST NOTIFICATION CONTAINER
+    =========================================== -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2.5 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
+
+    <!-- ==========================================
+         JAVASCRIPT DATA & INTERACTIVE LOGIC
+    =========================================== -->
+    <script>
+        /* ------------------------------------------
+           1. STRUCTURED INSTITUTIONAL DATA
+        ------------------------------------------- */
+        const departmentsData = [
+            {
+                id: 'dept-cs',
+                name: 'Computer Science & AI',
+                code: 'SCSA',
+                icon: 'fa-microchip',
+                color: 'blue',
+                head: 'Dr. Kamran Mahmood, PhD (MIT)',
+                coursesCount: 14,
+                facultyCount: 42,
+                labHighlight: 'NVIDIA DGX Deep Learning & Autonomous Robotics Lab',
+                description: 'Pioneering research in Generative AI, Computer Vision, Distributed Cloud Systems, and Cybersecurity with ACM/ABET-aligned curricula.',
+                curriculumHighlights: ['Neural Networks & Deep Learning', 'Distributed Cloud Architecture', 'Quantum Computing Fundamentals', 'Zero-Trust Cybersecurity'],
+                facilities: ['NVIDIA DGX A100 Cluster', 'IoT & Embedded Systems Studio', 'ACM Competitive Coding Arena']
+            },
+            {
+                id: 'dept-ds',
+                name: 'Data Science & Analytics',
+                code: 'SDSA',
+                icon: 'fa-chart-pie',
+                color: 'emerald',
+                head: 'Dr. Nadia Rehman, PhD (ETH Zurich)',
+                coursesCount: 9,
+                facultyCount: 28,
+                labHighlight: 'Big Data Lakehouse & Predictive Modeling Center',
+                description: 'Equipping analysts with statistical inference, scalable ETL pipelines, financial econometrics, and enterprise decision intelligence.',
+                curriculumHighlights: ['Statistical Machine Learning', 'Apache Spark & Big Data Engineering', 'Bayesian Inference & Forecasting', 'Natural Language Processing'],
+                facilities: ['Bloomberg Financial Terminal Lab', 'Petabyte Hadoop/Spark Sandbox', 'Data Visualization Wall']
+            },
+            {
+                id: 'dept-ee',
+                name: 'Electrical & Electronics',
+                code: 'SEEE',
+                icon: 'fa-bolt',
+                color: 'amber',
+                head: 'Dr. Tariq Javed, PhD (Imperial College)',
+                coursesCount: 11,
+                facultyCount: 34,
+                labHighlight: 'VLSI Chip Design & Smart Renewable Microgrid Lab',
+                description: 'Focused on semiconductor fabrication, power electronics, 5G/6G wireless communications, and industrial automation.',
+                curriculumHighlights: ['CMOS VLSI Circuit Design', 'Smart Grid & Renewable Systems', 'Digital Signal Processing (DSP)', 'RF & Microwave Engineering'],
+                facilities: ['Cadence EDA Chip Design Suite', 'High-Voltage Power Lab', 'Anechoic RF Chamber']
+            },
+            {
+                id: 'dept-bm',
+                name: 'Business & Management',
+                code: 'SBMS',
+                icon: 'fa-briefcase',
+                color: 'indigo',
+                head: 'Dr. Hina Pervaiz, PhD (LSE)',
+                coursesCount: 10,
+                facultyCount: 31,
+                labHighlight: 'FinTech Innovation Hub & Venture Incubation Center',
+                description: 'Bridging technology entrepreneurship, supply chain analytics, corporate finance, and global digital leadership.',
+                curriculumHighlights: ['FinTech & Blockchain Strategy', 'Global Supply Chain Analytics', 'Venture Capital & Startup Scaling', 'Organizational Leadership'],
+                facilities: ['Apex Startup Incubator', 'Behavioral Economics Lab', 'Executive Case Study Amphitheater']
+            },
+            {
+                id: 'dept-bio',
+                name: 'Biotechnology',
+                code: 'SBIO',
+                icon: 'fa-dna',
+                color: 'teal',
+                head: 'Dr. Salman Qureshi, PhD (Cambridge)',
+                coursesCount: 8,
+                facultyCount: 24,
+                labHighlight: 'CRISPR Genomics & Computational Bioinformatics Lab',
+                description: 'Advancing molecular diagnostics, pharmaceutical bioprocessing, agricultural genetics, and computational protein folding.',
+                curriculumHighlights: ['CRISPR Gene Editing Techniques', 'Computational Bioinformatics', 'Industrial Bioprocess Engineering', 'Molecular Immunology'],
+                facilities: ['BSL-2 Molecular Biology Suite', 'Next-Gen DNA Sequencer', 'Tissue Culture Cleanroom']
+            },
+            {
+                id: 'dept-mp',
+                name: 'Mathematics & Physics',
+                code: 'SMAP',
+                icon: 'fa-atom',
+                color: 'purple',
+                head: 'Dr. Zafar Iqbal, PhD (Oxford)',
+                coursesCount: 8,
+                facultyCount: 26,
+                labHighlight: 'Quantum Optics & Applied Mathematical Modeling Lab',
+                description: 'Foundational research in theoretical physics, cryptography, differential equations, and photonics instrumentation.',
+                curriculumHighlights: ['Cryptographic Number Theory', 'Quantum Mechanics & Photonics', 'Numerical Partial Differential Eqs', 'Stochastic Calculus'],
+                facilities: ['Laser & Quantum Optics Bench', 'Symbolic Computation Cluster', 'Astrophysics Observatory Dome']
+            }
+        ];
+
+        const coursesData = [
+            { code: 'CS-401', title: 'Artificial Intelligence & Deep Learning', dept: 'Computer Science & AI', level: 'BS', credits: 4, duration: '16 Weeks', semester: 'Fall / Spring', prereq: 'CS-202 Data Structures', syllabus: 'Covers supervised/unsupervised learning, CNNs, Transformers, backpropagation, and PyTorch model deployment.' },
+            { code: 'CS-612', title: 'Large Language Models & Generative AI', dept: 'Computer Science & AI', level: 'MS', credits: 3, duration: '16 Weeks', semester: 'Fall', prereq: 'Linear Algebra & ML Basics', syllabus: 'Attention mechanisms, RLHF, parameter-efficient fine-tuning (LoRA), RAG architectures, and AI safety.' },
+            { code: 'DS-305', title: 'Big Data Analytics & Cloud Pipelines', dept: 'Data Science & Analytics', level: 'BS', credits: 4, duration: '16 Weeks', semester: 'Spring', prereq: 'DB-201 Database Systems', syllabus: 'Distributed storage, Apache Spark, Kafka streaming, Snowflake warehousing, and real-time dashboards.' },
+            { code: 'DS-704', title: 'Causal Inference & Stochastic Modeling', dept: 'Data Science & Analytics', level: 'PhD', credits: 3, duration: '16 Weeks', semester: 'Fall', prereq: 'Graduate Probability Theory', syllabus: 'Structural causal models, counterfactual estimation, Markov Chain Monte Carlo, and research paper seminar.' },
+            { code: 'EE-310', title: 'VLSI Digital System Design', dept: 'Electrical & Electronics', level: 'BS', credits: 4, duration: '16 Weeks', semester: 'Fall', prereq: 'EE-204 Digital Logic Design', syllabus: 'CMOS fabrication, Verilog/SystemVerilog synthesis, static timing analysis, and physical chip layout.' },
+            { code: 'EE-508', title: 'Smart Microgrids & Power Electronics', dept: 'Electrical & Electronics', level: 'MS', credits: 3, duration: '16 Weeks', semester: 'Spring', prereq: 'EE-301 Power Systems', syllabus: 'Solar/wind inverter topologies, battery management systems, and grid-tied frequency stabilization.' },
+            { code: 'BM-215', title: 'FinTech & Digital Financial Strategy', dept: 'Business & Management', level: 'BS', credits: 3, duration: '16 Weeks', semester: 'Fall / Spring', prereq: 'BM-101 Corporate Finance', syllabus: 'Digital payment rails, algorithmic trading basics, RegTech compliance, and venture valuation.' },
+            { code: 'BM-450', title: 'Executive Diploma in Product Management', dept: 'Business & Management', level: 'Diploma', credits: 12, duration: '24 Weeks', semester: 'Modular', prereq: 'Bachelor Degree or Equivalent', syllabus: 'Agile roadmapping, user discovery, growth metrics, SaaS pricing models, and capstone pitch.' },
+            { code: 'BIO-302', title: 'Genetic Engineering & CRISPR Systems', dept: 'Biotechnology', level: 'BS', credits: 4, duration: '16 Weeks', semester: 'Fall', prereq: 'BIO-201 Molecular Biology', syllabus: 'Recombinant DNA technology, CRISPR-Cas9 guide design, PCR verification, and bioethics.' },
+            { code: 'BIO-605', title: 'Computational Genomics & Proteomics', dept: 'Biotechnology', level: 'MS', credits: 3, duration: '16 Weeks', semester: 'Spring', prereq: 'BIO-302 & Python Basics', syllabus: 'Sequence alignment algorithms, AlphaFold protein structure analysis, and transcriptomics.' },
+            { code: 'MP-208', title: 'Applied Cryptography & Number Theory', dept: 'Mathematics & Physics', level: 'BS', credits: 3, duration: '16 Weeks', semester: 'Spring', prereq: 'MP-104 Discrete Mathematics', syllabus: 'Elliptic curve cryptography, RSA, zero-knowledge proofs, and post-quantum lattice basics.' },
+            { code: 'CS-490', title: 'Diploma in Full-Stack Cloud Engineering', dept: 'Computer Science & AI', level: 'Diploma', credits: 15, duration: '20 Weeks', semester: 'Weekend Track', prereq: 'Basic Programming', syllabus: 'Modern TypeScript frontends, containerized microservices, Kubernetes orchestration, and CI/CD.' }
+        ];
+
+        const facultyData = [
+            { id: 'fac-1', name: 'Dr. Kamran Mahmood', title: 'Professor & Dean', dept: 'Computer Science & AI', qual: 'PhD Computer Science, MIT', spec: 'Generative AI & Autonomous Robotics', hours: 'Mon & Wed • 2:00 PM – 4:30 PM', email: 'k.mahmood@apexcollege.edu.pk', publications: 68, initials: 'KM', gradient: 'from-blue-600 to-navy-800' },
+            { id: 'fac-2', name: 'Dr. Nadia Rehman', title: 'Professor & HOD', dept: 'Data Science & Analytics', qual: 'PhD Statistics, ETH Zurich', spec: 'Causal ML & Financial Econometrics', hours: 'Tue & Thu • 11:00 AM – 1:30 PM', email: 'n.rehman@apexcollege.edu.pk', publications: 54, initials: 'NR', gradient: 'from-emerald-600 to-teal-800' },
+            { id: 'fac-3', name: 'Dr. Tariq Javed', title: 'Professor', dept: 'Electrical & Electronics', qual: 'PhD Microelectronics, Imperial', spec: 'Low-Power VLSI & 6G RF Circuits', hours: 'Mon & Thu • 3:00 PM – 5:00 PM', email: 't.javed@apexcollege.edu.pk', publications: 72, initials: 'TJ', gradient: 'from-amber-500 to-orange-700' },
+            { id: 'fac-4', name: 'Dr. Hina Pervaiz', title: 'Associate Professor', dept: 'Business & Management', qual: 'PhD Management, LSE', spec: 'FinTech Ecosystems & Venture Growth', hours: 'Wed & Fri • 10:30 AM – 1:00 PM', email: 'h.pervaiz@apexcollege.edu.pk', publications: 39, initials: 'HP', gradient: 'from-indigo-600 to-purple-800' },
+            { id: 'fac-5', name: 'Dr. Salman Qureshi', title: 'Professor', dept: 'Biotechnology', qual: 'PhD Molecular Biology, Cambridge', spec: 'CRISPR Therapeutics & Genomics', hours: 'Tue & Fri • 2:00 PM – 4:00 PM', email: 's.qureshi@apexcollege.edu.pk', publications: 61, initials: 'SQ', gradient: 'from-teal-600 to-emerald-800' },
+            { id: 'fac-6', name: 'Dr. Zafar Iqbal', title: 'Professor', dept: 'Mathematics & Physics', qual: 'PhD Theoretical Physics, Oxford', spec: 'Quantum Optics & Post-Quantum Crypto', hours: 'Mon & Wed • 11:30 AM – 1:30 PM', email: 'z.iqbal@apexcollege.edu.pk', publications: 83, initials: 'ZI', gradient: 'from-purple-600 to-navy-900' },
+            { id: 'fac-7', name: 'Dr. Sara Farooq', title: 'Assistant Professor', dept: 'Computer Science & AI', qual: 'PhD AI, University of Toronto', spec: 'Computer Vision & Medical Imaging', hours: 'Tue & Thu • 2:30 PM – 4:30 PM', email: 's.farooq@apexcollege.edu.pk', publications: 27, initials: 'SF', gradient: 'from-sky-600 to-blue-800' },
+            { id: 'fac-8', name: 'Dr. Usman Ghani', title: 'Associate Professor', dept: 'Data Science & Analytics', qual: 'PhD Data Engineering, TU Delft', spec: 'Distributed Graph Databases', hours: 'Wed & Fri • 1:30 PM – 3:30 PM', email: 'u.ghani@apexcollege.edu.pk', publications: 44, initials: 'UG', gradient: 'from-cyan-600 to-slate-800' }
+        ];
+
+        let studentsData = [
+            { roll: 'APX-23-001', name: 'Zainab Fatima', program: 'BS Artificial Intelligence', dept: 'Computer Science & AI', semester: 'Semester 7', cgpa: 3.94, attendance: 97, status: 'Dean’s List' },
+            { roll: 'APX-24-014', name: 'Hamza Bin Tariq', program: 'BS Data Science', dept: 'Data Science & Analytics', semester: 'Semester 5', cgpa: 3.82, attendance: 93, status: 'Honor Roll' },
+            { roll: 'APX-24-029', name: 'Mahnoor Siddiqui', program: 'BS Electrical Engineering', dept: 'Electrical & Electronics', semester: 'Semester 5', cgpa: 3.76, attendance: 91, status: 'Good Standing' },
+            { roll: 'APX-25-042', name: 'Daniyal Ahmed', program: 'BBA FinTech Track', dept: 'Business & Management', semester: 'Semester 3', cgpa: 3.65, attendance: 89, status: 'Good Standing' },
+            { roll: 'APX-23-018', name: 'Areeba Khalid', program: 'BS Biotechnology', dept: 'Biotechnology', semester: 'Semester 7', cgpa: 3.89, attendance: 96, status: 'Dean’s List' },
+            { roll: 'APX-26-007', name: 'Omer Farooq', program: 'BS Computer Science', dept: 'Computer Science & AI', semester: 'Semester 1', cgpa: 3.71, attendance: 95, status: 'Good Standing' },
+            { roll: 'APX-25-055', name: 'Hafsa Noor', program: 'BS Applied Mathematics', dept: 'Mathematics & Physics', semester: 'Semester 3', cgpa: 3.88, attendance: 94, status: 'Honor Roll' }
+        ];
+
+        let eventsData = [
+            {
+                id: 'evt-1',
+                title: 'Apex Tech Symposium & AI Hackathon 2026',
+                category: 'Tech Symposium',
+                day: '28',
+                month: 'NOV',
+                time: '09:30 AM – 05:00 PM',
+                venue: 'Main Auditorium & DGX Arena',
+                organizer: 'School of Computer Science & ACM Chapter',
+                seatsLeft: 42,
+                registered: false,
+                description: '24-hour flagship coding & generative AI hackathon featuring $5,000 in cash prizes and industry keynote panels.'
+            },
+            {
+                id: 'evt-2',
+                title: 'Hands-On Workshop: Cloud Native Kubernetes & CI/CD',
+                category: 'Workshop',
+                day: '03',
+                month: 'DEC',
+                time: '02:00 PM – 05:00 PM',
+                venue: 'Computing Lab 04, Block B',
+                organizer: 'Department of Data Science',
+                seatsLeft: 18,
+                registered: false,
+                description: 'Practical lab workshop on container orchestration, automated pipelines, and production observability.'
+            },
+            {
+                id: 'evt-3',
+                title: 'International Seminar on Quantum Photonics & 6G',
+                category: 'Seminar',
+                day: '08',
+                month: 'DEC',
+                time: '11:00 AM – 01:30 PM',
+                venue: 'Senate Conference Hall',
+                organizer: 'School of Electrical & Physics',
+                seatsLeft: 65,
+                registered: false,
+                description: 'Guest lecture by visiting researchers from ETH Zurich and Imperial College on next-gen optical networks.'
+            },
+            {
+                id: 'evt-4',
+                title: 'Annual Winter Cultural Gala & Alumni Night',
+                category: 'Cultural',
+                day: '14',
+                month: 'DEC',
+                time: '06:00 PM – 10:00 PM',
+                venue: 'Central Campus Amphitheater',
+                organizer: 'Student Affairs Council',
+                seatsLeft: 120,
+                registered: false,
+                description: 'An evening of classical performances, drama showcase, alumni networking dinner, and student awards.'
+            },
+            {
+                id: 'evt-5',
+                title: 'Spring 2027 Admissions Open House & Campus Tour',
+                category: 'Admissions',
+                day: '19',
+                month: 'DEC',
+                time: '10:00 AM – 03:00 PM',
+                venue: 'Admissions Welcome Pavilion',
+                organizer: 'Office of the Registrar',
+                seatsLeft: 85,
+                registered: false,
+                description: 'Guided lab tours, one-on-one faculty counseling, scholarship assessment, and on-spot application guidance.'
+            },
+            {
+                id: 'evt-6',
+                title: 'CRISPR & Computational Drug Discovery Bootcamp',
+                category: 'Workshop',
+                day: '22',
+                month: 'DEC',
+                time: '10:00 AM – 04:00 PM',
+                venue: 'Bio-Informatics Center',
+                organizer: 'Department of Biotechnology',
+                seatsLeft: 24,
+                registered: false,
+                description: 'Interactive molecular docking simulation and genomic sequence alignment workshop for undergrad & MS scholars.'
+            }
+        ];
+
+        /* ------------------------------------------
+           2. RENDER DEPARTMENTS
+        ------------------------------------------- */
+        function renderDepartments() {
+            const grid = document.getElementById('departments-grid');
+            const colorMap = {
+                blue: 'bg-blue-50 text-blue-700 border-blue-200',
+                emerald: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+                amber: 'bg-amber-50 text-amber-700 border-amber-200',
+                indigo: 'bg-indigo-50 text-indigo-700 border-indigo-200',
+                teal: 'bg-teal-50 text-teal-700 border-teal-200',
+                purple: 'bg-purple-50 text-purple-700 border-purple-200',
+            };
+
+            grid.innerHTML = departmentsData.map(dept => `
+                <div class="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-soft hover:shadow-card hover:-translate-y-1 transition-all flex flex-col justify-between group">
+                    <div>
+                        <div class="flex items-start justify-between gap-3 mb-4">
+                            <div class="w-12 h-12 rounded-2xl border ${colorMap[dept.color]} flex items-center justify-center text-xl group-hover:scale-105 transition-transform">
+                                <i class="fa-solid ${dept.icon}"></i>
+                            </div>
+                            <span class="text-xs font-bold tracking-wider uppercase px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600">
+                                ${dept.code}
+                            </span>
+                        </div>
+
+                        <h3 class="font-display font-bold text-lg text-navy-900 group-hover:text-blue-700 transition-colors">
+                            ${dept.name}
+                        </h3>
+                        <p class="text-xs text-slate-500 mt-1 font-medium">
+                            <i class="fa-solid fa-user-tie text-slate-400 mr-1"></i> HOD: ${dept.head}
+                        </p>
+                        <p class="text-sm text-slate-600 mt-3 leading-relaxed">
+                            ${dept.description}
+                        </p>
+
+                        <div class="mt-4 p-3 rounded-xl bg-slate-50 border border-slate-100 text-xs text-slate-700">
+                            <span class="font-semibold text-navy-900 block mb-0.5"><i class="fa-solid fa-flask text-emerald-600 mr-1"></i> Flagship Lab:</span>
+                            ${dept.labHighlight}
+                        </div>
+                    </div>
+
+                    <div class="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <div class="flex items-center gap-4 text-xs font-semibold text-slate-600">
+                            <span><strong class="text-navy-900">${dept.coursesCount}</strong> Programs</span>
+                            <span><strong class="text-navy-900">${dept.facultyCount}</strong> Faculty</span>
+                        </div>
+                        <button onclick="openDepartmentModal('${dept.id}')" class="inline-flex items-center gap-1.5 text-xs font-bold text-blue-700 hover:text-blue-800">
+                            <span>Details</span>
+                            <i class="fa-solid fa-arrow-right text-[11px]"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        /* ------------------------------------------
+           3. RENDER & FILTER COURSE CATALOG
+        ------------------------------------------- */
+        let activeCourseLevelPill = 'ALL';
+
+        function setCourseLevelPill(level) {
+            activeCourseLevelPill = level;
+            document.getElementById('course-level-filter').value = level;
+            document.querySelectorAll('.course-pill').forEach(btn => {
+                if (btn.dataset.level === level) {
+                    btn.className = 'course-pill active px-3.5 py-1.5 rounded-full text-xs font-semibold bg-navy-900 text-white transition-all';
+                } else {
+                    btn.className = 'course-pill px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white text-slate-600 border border-slate-200 hover:border-slate-300 transition-all';
+                }
+            });
+            filterCourses();
+        }
+
+        function filterCourses() {
+            const search = document.getElementById('course-search').value.toLowerCase().trim();
+            const dept = document.getElementById('course-dept-filter').value;
+            const levelSelect = document.getElementById('course-level-filter').value;
+
+            // Sync pill highlight with dropdown
+            document.querySelectorAll('.course-pill').forEach(btn => {
+                if (btn.dataset.level === levelSelect) {
+                    btn.className = 'course-pill active px-3.5 py-1.5 rounded-full text-xs font-semibold bg-navy-900 text-white transition-all';
+                } else {
+                    btn.className = 'course-pill px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white text-slate-600 border border-slate-200 hover:border-slate-300 transition-all';
+                }
+            });
+
+            const filtered = coursesData.filter(c => {
+                const matchesSearch = c.code.toLowerCase().includes(search) || c.title.toLowerCase().includes(search) || c.dept.toLowerCase().includes(search);
+                const matchesDept = dept === 'ALL' || c.dept === dept;
+                const matchesLevel = levelSelect === 'ALL' || c.level === levelSelect;
+                return matchesSearch && matchesDept && matchesLevel;
+            });
+
+            const grid = document.getElementById('courses-grid');
+            const empty = document.getElementById('courses-empty');
+            document.getElementById('course-result-count').textContent = `Showing ${filtered.length} course${filtered.length === 1 ? '' : 's'}`;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                empty.classList.remove('hidden');
+                return;
+            }
+            empty.classList.add('hidden');
+
+            const levelBadges = {
+                'BS': 'bg-blue-50 text-blue-700 border-blue-200',
+                'MS': 'bg-emerald-50 text-emerald-700 border-emerald-200',
+                'PhD': 'bg-purple-50 text-purple-700 border-purple-200',
+                'Diploma': 'bg-amber-50 text-amber-800 border-amber-200'
+            };
+
+            grid.innerHTML = filtered.map(course => `
+                <div class="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-soft hover:shadow-card transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <span class="font-mono text-xs font-bold px-2.5 py-1 rounded-lg bg-navy-900 text-white">
+                                ${course.code}
+                            </span>
+                            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full border ${levelBadges[course.level]}">
+                                ${course.level} Level
+                            </span>
+                        </div>
+
+                        <h3 class="font-display font-bold text-base sm:text-lg text-navy-900 leading-snug">
+                            ${course.title}
+                        </h3>
+                        <p class="text-xs font-medium text-blue-700 mt-1">${course.dept}</p>
+
+                        <div class="mt-4 grid grid-cols-2 gap-2 text-xs text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                            <div><span class="text-slate-400 block">Credit Hours</span><strong class="text-navy-900">${course.credits} Credits</strong></div>
+                            <div><span class="text-slate-400 block">Duration</span><strong class="text-navy-900">${course.duration}</strong></div>
+                            <div class="col-span-2 pt-1 border-t border-slate-200/60">
+                                <span class="text-slate-400">Prerequisite:</span> <strong class="text-slate-700">${course.prereq}</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-[11px] font-medium text-slate-500"><i class="fa-regular fa-calendar mr-1"></i> ${course.semester}</span>
+                        <button onclick="openCourseModal('${course.code}')" class="px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-navy-900 text-navy-900 hover:text-white text-xs font-bold transition-colors">
+                            Syllabus & Enroll
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function resetCourseFilters() {
+            document.getElementById('course-search').value = '';
+            document.getElementById('course-dept-filter').value = 'ALL';
+            setCourseLevelPill('ALL');
+        }
+
+        /* ------------------------------------------
+           4. RENDER & FILTER FACULTY DIRECTORY
+        ------------------------------------------- */
+        function filterFaculty() {
+            const search = document.getElementById('faculty-search').value.toLowerCase().trim();
+            const dept = document.getElementById('faculty-dept-filter').value;
+
+            const filtered = facultyData.filter(f => {
+                const matchesSearch = f.name.toLowerCase().includes(search) || f.spec.toLowerCase().includes(search) || f.qual.toLowerCase().includes(search);
+                const matchesDept = dept === 'ALL' || f.dept === dept;
+                return matchesSearch && matchesDept;
+            });
+
+            const grid = document.getElementById('faculty-grid');
+            const empty = document.getElementById('faculty-empty');
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                empty.classList.remove('hidden');
+                return;
+            }
+            empty.classList.add('hidden');
+
+            grid.innerHTML = filtered.map(f => `
+                <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-soft hover:shadow-card transition-all flex flex-col justify-between text-center group">
+                    <div>
+                        <div class="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br ${f.gradient} text-white font-display font-extrabold text-xl flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
+                            ${f.initials}
+                        </div>
+                        <h3 class="font-display font-bold text-base text-navy-900 mt-3.5">${f.name}</h3>
+                        <span class="inline-block text-[11px] font-semibold text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-full mt-1">
+                            ${f.title}
+                        </span>
+                        <p class="text-xs text-slate-500 mt-1.5 font-medium">${f.qual}</p>
+
+                        <div class="mt-3 pt-3 border-t border-slate-100 text-left space-y-1.5 text-xs">
+                            <div class="text-slate-600"><strong class="text-navy-900">Dept:</strong> ${f.dept}</div>
+                            <div class="text-slate-600"><strong class="text-navy-900">Focus:</strong> ${f.spec}</div>
+                            <div class="text-slate-500 text-[11px]"><i class="fa-regular fa-clock text-emerald-600 mr-1"></i> ${f.hours}</div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center gap-2">
+                        <button onclick="openFacultyModal('${f.id}')" class="flex-1 py-2 rounded-xl bg-slate-100 hover:bg-navy-900 text-navy-900 hover:text-white text-xs font-bold transition-colors">
+                            Academic Profile
+                        </button>
+                        <button onclick="copyEmail('${f.email}')" title="Copy Email" class="p-2 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 transition-colors">
+                            <i class="fa-regular fa-envelope"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        /* ------------------------------------------
+           5. RENDER & FILTER STUDENT DIRECTORY
+        ------------------------------------------- */
+        function filterStudents() {
+            const search = document.getElementById('student-search').value.toLowerCase().trim();
+            const dept = document.getElementById('student-dept-filter').value;
+            const sem = document.getElementById('student-sem-filter').value;
+
+            const filtered = studentsData.filter(s => {
+                const matchesSearch = s.roll.toLowerCase().includes(search) || s.name.toLowerCase().includes(search) || s.program.toLowerCase().includes(search);
+                const matchesDept = dept === 'ALL' || s.dept === dept;
+                const matchesSem = sem === 'ALL' || s.semester === sem;
+                return matchesSearch && matchesDept && matchesSem;
+            });
+
+            const tbody = document.getElementById('students-table-body');
+            const empty = document.getElementById('students-empty');
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = '';
+                empty.classList.remove('hidden');
+                return;
+            }
+            empty.classList.add('hidden');
+
+            tbody.innerHTML = filtered.map(s => {
+                const statusColor = s.cgpa >= 3.85 
+                    ? 'bg-amber-500/20 text-amber-300 border-amber-500/30' 
+                    : s.cgpa >= 3.75 
+                    ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' 
+                    : 'bg-blue-500/20 text-blue-300 border-blue-500/30';
+
+                const attColor = s.attendance >= 90 ? 'text-emerald-400' : s.attendance >= 80 ? 'text-amber-300' : 'text-rose-400';
+
+                return `
+                    <tr class="hover:bg-slate-800/80 transition-colors">
+                        <td class="py-3.5 px-5 font-mono text-xs font-bold text-emerald-300 whitespace-nowrap">${s.roll}</td>
+                        <td class="py-3.5 px-5 font-semibold text-white whitespace-nowrap">${s.name}</td>
+                        <td class="py-3.5 px-5 whitespace-nowrap">
+                            <span class="text-slate-200 block text-xs font-medium">${s.program}</span>
+                            <span class="text-slate-400 text-[11px]">${s.dept}</span>
+                        </td>
+                        <td class="py-3.5 px-5 text-xs text-slate-300 whitespace-nowrap">${s.semester}</td>
+                        <td class="py-3.5 px-5 font-display font-bold text-white whitespace-nowrap">${Number(s.cgpa).toFixed(2)}</td>
+                        <td class="py-3.5 px-5 text-xs font-semibold ${attColor} whitespace-nowrap">${s.attendance}%</td>
+                        <td class="py-3.5 px-5 whitespace-nowrap">
+                            <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold border ${statusColor}">
+                                ${s.status}
+                            </span>
+                        </td>
+                        <td class="py-3.5 px-5 text-right whitespace-nowrap">
+                            <button onclick="openTranscriptModal('${s.roll}')" class="px-3 py-1.5 rounded-lg bg-slate-700 hover:bg-blue-600 text-white text-xs font-semibold transition-colors">
+                                View Card
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        /* ------------------------------------------
+           6. RENDER & FILTER EVENTS + LIVE RSVP
+        ------------------------------------------- */
+        let activeEventCategory = 'ALL';
+
+        function filterEvents(category) {
+            activeEventCategory = category;
+            document.querySelectorAll('.event-cat-btn').forEach(btn => {
+                if (btn.dataset.cat === category) {
+                    btn.className = 'event-cat-btn active px-3.5 py-2 rounded-xl text-xs font-semibold bg-navy-900 text-white transition-all';
+                } else {
+                    btn.className = 'event-cat-btn px-3.5 py-2 rounded-xl text-xs font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition-all';
+                }
+            });
+
+            const filtered = category === 'ALL' ? eventsData : eventsData.filter(e => e.category === category);
+            const grid = document.getElementById('events-grid');
+
+            grid.innerHTML = filtered.map(ev => `
+                <div class="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-soft hover:shadow-card transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-start justify-between gap-3 mb-4">
+                            <div class="w-14 h-14 rounded-2xl bg-navy-900 text-white flex flex-col items-center justify-center shrink-0 shadow-sm">
+                                <span class="font-display font-extrabold text-lg leading-none">${ev.day}</span>
+                                <span class="text-[10px] font-bold tracking-wider text-amber-300 mt-0.5">${ev.month}</span>
+                            </div>
+                            <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
+                                ${ev.category}
+                            </span>
+                        </div>
+
+                        <h3 class="font-display font-bold text-lg text-navy-900 leading-snug">${ev.title}</h3>
+                        <p class="text-xs text-slate-600 mt-2 leading-relaxed">${ev.description}</p>
+
+                        <div class="mt-4 space-y-1.5 text-xs text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                            <div><i class="fa-regular fa-clock text-blue-600 w-4"></i> ${ev.time}</div>
+                            <div><i class="fa-solid fa-location-dot text-emerald-600 w-4"></i> ${ev.venue}</div>
+                            <div><i class="fa-solid fa-users text-amber-600 w-4"></i> Host: ${ev.organizer}</div>
+                        </div>
+                    </div>
+
+                    <div class="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between gap-2">
+                        <span class="text-xs font-semibold ${ev.seatsLeft < 25 ? 'text-rose-600' : 'text-slate-600'}">
+                            <i class="fa-solid fa-chair mr-1"></i> ${ev.seatsLeft} seats left
+                        </span>
+                        <button onclick="toggleEventRSVP('${ev.id}')" class="px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                            ev.registered 
+                            ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' 
+                            : 'bg-navy-900 hover:bg-blue-700 text-white shadow-sm'
+                        }">
+                            ${ev.registered ? '<i class="fa-solid fa-check mr-1"></i> RSVP Confirmed' : 'Register / RSVP'}
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleEventRSVP(eventId) {
+            const ev = eventsData.find(e => e.id === eventId);
+            if (!ev) return;
+
+            if (ev.registered) {
+                ev.registered = false;
+                ev.seatsLeft += 1;
+                showToast(`RSVP cancelled for "${ev.title}".`, 'info');
+            } else {
+                if (ev.seatsLeft <= 0) {
+                    showToast('Sorry, this event is currently at full capacity.', 'error');
+                    return;
+                }
+                ev.registered = true;
+                ev.seatsLeft -= 1;
+                showToast(`Seat reserved for "${ev.title}"! E-Pass added to ERP Drawer.`, 'success');
+            }
+            filterEvents(activeEventCategory);
+        }
+
+        /* ------------------------------------------
+           7. MODALS (Department, Course, Faculty, Transcript)
+        ------------------------------------------- */
+        function openUniversalModal(badgeText, htmlContent) {
+            document.getElementById('modal-badge').textContent = badgeText;
+            document.getElementById('modal-body').innerHTML = htmlContent;
+            document.getElementById('universal-modal').classList.remove('hidden');
+        }
+
+        function closeUniversalModal(e) {
+            if (!e || e.target.id === 'universal-modal') {
+                document.getElementById('universal-modal').classList.add('hidden');
+            }
+        }
+
+        function openDepartmentModal(deptId) {
+            const d = departmentsData.find(item => item.id === deptId);
+            if (!d) return;
+            openUniversalModal(`${d.code} • School Overview`, `
+                <h3 class="font-display text-2xl font-extrabold text-navy-900">${d.name}</h3>
+                <p class="text-sm font-medium text-blue-700 mt-1">Head of Department: ${d.head}</p>
+                <p class="text-sm text-slate-600 mt-3 leading-relaxed">${d.description}</p>
+
+                <div class="grid sm:grid-cols-2 gap-4 mt-6">
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                        <h4 class="font-display font-bold text-xs uppercase tracking-wider text-navy-900 mb-2.5">Curriculum Highlights</h4>
+                        <ul class="space-y-1.5 text-xs text-slate-700">
+                            ${d.curriculumHighlights.map(item => `<li><i class="fa-solid fa-circle-check text-emerald-600 mr-1.5"></i>${item}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                        <h4 class="font-display font-bold text-xs uppercase tracking-wider text-navy-900 mb-2.5">Research Labs & Facilities</h4>
+                        <ul class="space-y-1.5 text-xs text-slate-700">
+                            ${d.facilities.map(item => `<li><i class="fa-solid fa-microscope text-blue-600 mr-1.5"></i>${item}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mt-6 flex justify-end gap-3">
+                    <a href="#courses" onclick="closeUniversalModal(); document.getElementById('course-dept-filter').value='${d.name}'; filterCourses();" class="px-5 py-2.5 rounded-xl bg-navy-900 hover:bg-blue-700 text-white text-xs font-bold transition-colors">
+                        Browse ${d.code} Courses
+                    </a>
+                </div>
+            `);
+        }
+
+        function openCourseModal(code) {
+            const c = coursesData.find(item => item.code === code);
+            if (!c) return;
+            openUniversalModal(`${c.code} • ${c.level} Syllabus`, `
+                <h3 class="font-display text-2xl font-extrabold text-navy-900">${c.title}</h3>
+                <p class="text-xs font-semibold text-blue-700 mt-1">${c.dept} • ${c.credits} Credit Hours • ${c.duration}</p>
+
+                <div class="mt-5 p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2 text-sm text-slate-700">
+                    <div class="font-display font-bold text-navy-900 text-xs uppercase tracking-wider">Course Outline & Learning Outcomes</div>
+                    <p class="text-sm leading-relaxed">${c.syllabus}</p>
+                    <div class="pt-2 text-xs text-slate-500">
+                        <strong>Prerequisite:</strong> ${c.prereq} &nbsp;|&nbsp; <strong>Offered:</strong> ${c.semester}
+                    </div>
+                </div>
+
+                <div class="mt-6 flex flex-wrap items-center justify-between gap-3">
+                    <span class="text-xs text-emerald-700 font-semibold"><i class="fa-solid fa-check-circle mr-1"></i> Open for Enrollment</span>
+                    <button onclick="closeUniversalModal(); showToast('Pre-enrollment request logged for ${c.code} (${c.title}).', 'success');" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-sm">
+                        Request Course Enrollment
+                    </button>
+                </div>
+            `);
+        }
+
+        function openFacultyModal(facId) {
+            const f = facultyData.find(item => item.id === facId);
+            if (!f) return;
+            openUniversalModal('Faculty Profile', `
+                <div class="flex items-center gap-4">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br ${f.gradient} text-white font-display font-extrabold text-xl flex items-center justify-center shrink-0">
+                        ${f.initials}
+                    </div>
+                    <div>
+                        <h3 class="font-display text-xl font-extrabold text-navy-900">${f.name}</h3>
+                        <p class="text-xs font-semibold text-blue-700">${f.title} • ${f.dept}</p>
+                        <p class="text-xs text-slate-500 mt-0.5">${f.qual}</p>
+                    </div>
+                </div>
+
+                <div class="mt-5 grid grid-cols-2 gap-3 text-xs">
+                    <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                        <span class="text-slate-400 block">Primary Research</span>
+                        <strong class="text-navy-900 mt-0.5 block">${f.spec}</strong>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                        <span class="text-slate-400 block">Peer-Reviewed Papers</span>
+                        <strong class="text-navy-900 mt-0.5 block">${f.publications} Indexed Publications</strong>
+                    </div>
+                    <div class="col-span-2 p-3.5 rounded-xl bg-emerald-50/60 border border-emerald-200 text-emerald-900">
+                        <strong>Student Advisory Office Hours:</strong> ${f.hours}
+                    </div>
+                </div>
+
+                <div class="mt-6 flex justify-end gap-2.5">
+                    <button onclick="copyEmail('${f.email}')" class="px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50">
+                        <i class="fa-regular fa-copy mr-1"></i> Copy Email
+                    </button>
+                    <button onclick="closeUniversalModal(); showToast('Appointment request sent to ${f.name}.', 'success');" class="px-5 py-2.5 rounded-xl bg-navy-900 text-white text-xs font-bold hover:bg-blue-700">
+                        Book Advisory Slot
+                    </button>
+                </div>
+            `);
+        }
+
+        function openTranscriptModal(roll) {
+            const s = studentsData.find(item => item.roll === roll);
+            if (!s) return;
+            openUniversalModal('Official Digital Transcript Card', `
+                <div class="border-2 border-navy-900/15 rounded-2xl p-5 bg-gradient-to-br from-slate-50 to-white">
+                    <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+                        <div>
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-blue-700">Apex College Registrar</span>
+                            <h3 class="font-display text-xl font-extrabold text-navy-900">${s.name}</h3>
+                            <p class="text-xs font-mono text-slate-500">Roll No: ${s.roll} • ${s.semester}</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xs text-slate-400 block">Cumulative GPA</span>
+                            <span class="font-display text-2xl font-extrabold text-emerald-600">${Number(s.cgpa).toFixed(2)}</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3 my-4 text-xs">
+                        <div><span class="text-slate-400 block">Degree Program</span><strong class="text-navy-900">${s.program}</strong></div>
+                        <div><span class="text-slate-400 block">Department</span><strong class="text-navy-900">${s.dept}</strong></div>
+                        <div><span class="text-slate-400 block">Attendance Rate</span><strong class="text-navy-900">${s.attendance}% (Eligible)</strong></div>
+                        <div><span class="text-slate-400 block">Academic Standing</span><strong class="text-amber-700">${s.status}</strong></div>
+                    </div>
+
+                    <div class="text-[11px] text-slate-500 bg-slate-100 p-2.5 rounded-xl flex items-center justify-between">
+                        <span>Verification Hash: <code class="font-mono text-slate-700">APX-${s.roll}-2026</code></span>
+                        <span class="text-emerald-700 font-bold"><i class="fa-solid fa-shield-check"></i> Verified</span>
+                    </div>
+                </div>
+            `);
+        }
+
+        /* ------------------------------------------
+           8. ADD NEW STUDENT RECORD & SGPA CALCULATOR
+        ------------------------------------------- */
+        function openAddStudentModal() {
+            document.getElementById('add-student-modal').classList.remove('hidden');
+        }
+        function closeAddStudentModal(e) {
+            if (!e || e.target.id === 'add-student-modal') {
+                document.getElementById('add-student-modal').classList.add('hidden');
+            }
+        }
+
+        function handleAddStudent(e) {
+            e.preventDefault();
+            const roll = document.getElementById('new-stu-roll').value.trim().toUpperCase();
+            const name = document.getElementById('new-stu-name').value.trim();
+            const dept = document.getElementById('new-stu-dept').value;
+            const semester = document.getElementById('new-stu-sem').value;
+            const cgpa = parseFloat(document.getElementById('new-stu-cgpa').value);
+            const attendance = parseInt(document.getElementById('new-stu-att').value, 10);
+
+            const status = cgpa >= 3.85 ? 'Dean’s List' : cgpa >= 3.70 ? 'Honor Roll' : 'Good Standing';
+            const program = 'BS ' + dept.split('&')[0].trim();
+
+            studentsData.unshift({ roll, name, program, dept, semester, cgpa, attendance, status });
+            filterStudents();
+            closeAddStudentModal();
+            e.target.reset();
+            showToast(`Student ${name} (${roll}) added to the live directory!`, 'success');
+        }
+
+        function openGpaCalculatorModal() {
+            document.getElementById('gpa-modal').classList.remove('hidden');
+            calculateSGPA();
+        }
+        function closeGpaCalculatorModal(e) {
+            if (!e || e.target.id === 'gpa-modal') {
+                document.getElementById('gpa-modal').classList.add('hidden');
+            }
+        }
+
+        function calculateSGPA() {
+            const creds = document.querySelectorAll('.gpa-cred');
+            const grades = document.querySelectorAll('.gpa-grade');
+            let totalCredits = 0;
+            let totalPoints = 0;
+
+            creds.forEach((cInput, idx) => {
+                const c = parseFloat(cInput.value) || 0;
+                const g = parseFloat(grades[idx].value) || 0;
+                totalCredits += c;
+                totalPoints += c * g;
+            });
+
+            const sgpa = totalCredits > 0 ? (totalPoints / totalCredits) : 0;
+            document.getElementById('gpa-result-value').textContent = sgpa.toFixed(2);
+            const badge = document.getElementById('gpa-standing-badge');
+            if (sgpa >= 3.80) {
+                badge.textContent = "Dean's Honor List";
+                badge.className = "px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800";
+            } else if (sgpa >= 3.30) {
+                badge.textContent = "First Division Standing";
+                badge.className = "px-3 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-800";
+            } else {
+                badge.textContent = "Satisfactory Standing";
+                badge.className = "px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800";
+            }
+        }
+
+        /* ------------------------------------------
+           9. ERP DRAWER, GLOBAL SEARCH, FORM & TOASTS
+        ------------------------------------------- */
+        function openPortalDrawer() {
+            document.getElementById('portal-drawer-backdrop').classList.remove('hidden');
+            switchPortalRole('student');
+        }
+        function closePortalDrawer() {
+            document.getElementById('portal-drawer-backdrop').classList.add('hidden');
+        }
+
+        function switchPortalRole(role) {
+            const stuBtn = document.getElementById('role-btn-student');
+            const admBtn = document.getElementById('role-btn-admin');
+            const container = document.getElementById('portal-drawer-content');
+
+            if (role === 'student') {
+                stuBtn.className = 'py-2 rounded-lg text-xs font-bold bg-white text-navy-900 shadow-sm';
+                admBtn.className = 'py-2 rounded-lg text-xs font-semibold text-slate-600';
+                const rsvpCount = eventsData.filter(e => e.registered).length;
+                container.innerHTML = `
+                    <div class="p-4 rounded-2xl bg-navy-900 text-white space-y-1">
+                        <span class="text-[11px] text-emerald-300 font-semibold">Logged in as Sample Student</span>
+                        <h4 class="font-display font-bold text-base">Zainab Fatima (APX-23-001)</h4>
+                        <p class="text-xs text-slate-300">BS Artificial Intelligence • Semester 7</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3 text-xs">
+                        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                            <span class="text-slate-400 block">Current CGPA</span>
+                            <strong class="font-display text-lg text-navy-900">3.94 / 4.00</strong>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                            <span class="text-slate-400 block">Registered Events</span>
+                            <strong class="font-display text-lg text-blue-700">${rsvpCount} Active RSVP</strong>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="text-xs font-bold text-slate-700">Quick Student Actions</div>
+                        <button onclick="closePortalDrawer(); openGpaCalculatorModal();" class="w-full text-left p-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-xs font-semibold flex items-center justify-between">
+                            <span><i class="fa-solid fa-calculator text-amber-500 mr-2"></i> Open SGPA Calculator</span>
+                            <i class="fa-solid fa-chevron-right text-slate-400"></i>
+                        </button>
+                        <button onclick="closePortalDrawer(); openTranscriptModal('APX-23-001');" class="w-full text-left p-3 rounded-xl border border-slate-200 hover:bg-slate-50 text-xs font-semibold flex items-center justify-between">
+                            <span><i class="fa-solid fa-file-certificate text-emerald-600 mr-2"></i> Download Digital Transcript</span>
+                            <i class="fa-solid fa-chevron-right text-slate-400"></i>
+                        </button>
+                    </div>
+                `;
+            } else {
+                admBtn.className = 'py-2 rounded-lg text-xs font-bold bg-white text-navy-900 shadow-sm';
+                stuBtn.className = 'py-2 rounded-lg text-xs font-semibold text-slate-600';
+                container.innerHTML = `
+                    <div class="p-4 rounded-2xl bg-blue-950 text-white space-y-1">
+                        <span class="text-[11px] text-amber-300 font-semibold">Registrar & Admin Console</span>
+                        <h4 class="font-display font-bold text-base">Academic Operations Overview</h4>
+                        <p class="text-xs text-slate-300">Fall/Spring Session 2026–27</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3 text-xs">
+                        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                            <span class="text-slate-400 block">Listed Records</span>
+                            <strong class="font-display text-lg text-navy-900">${studentsData.length} Students</strong>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                            <span class="text-slate-400 block">Active Courses</span>
+                            <strong class="font-display text-lg text-emerald-700">${coursesData.length} Modules</strong>
+                        </div>
+                    </div>
+                    <button onclick="closePortalDrawer(); openAddStudentModal();" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold">
+                        + Add New Student to Directory
+                    </button>
+                `;
+            }
+        }
+
+        function openGlobalSearchModal() {
+            document.getElementById('search-modal').classList.remove('hidden');
+            setTimeout(() => document.getElementById('global-search-input').focus(), 50);
+        }
+        function closeGlobalSearchModal(e) {
+            if (!e || e.target.id === 'search-modal') {
+                document.getElementById('search-modal').classList.add('hidden');
+            }
+        }
+
+        function runGlobalSearch(query) {
+            const q = query.toLowerCase().trim();
+            const container = document.getElementById('global-search-results');
+            if (!q) {
+                container.innerHTML = '<p class="text-xs text-slate-400 text-center py-6">Start typing to search across departments, courses, faculty, or students...</p>';
+                return;
+            }
+
+            const results = [];
+            departmentsData.filter(d => d.name.toLowerCase().includes(q)).forEach(d => {
+                results.push({ type: 'Department', title: d.name, sub: d.head, action: `closeGlobalSearchModal(); openDepartmentModal('${d.id}')` });
+            });
+            coursesData.filter(c => c.title.toLowerCase().includes(q) || c.code.toLowerCase().includes(q)).forEach(c => {
+                results.push({ type: 'Course', title: `${c.code}: ${c.title}`, sub: `${c.dept} • ${c.level}`, action: `closeGlobalSearchModal(); openCourseModal('${c.code}')` });
+            });
+            facultyData.filter(f => f.name.toLowerCase().includes(q) || f.spec.toLowerCase().includes(q)).forEach(f => {
+                results.push({ type: 'Faculty', title: f.name, sub: `${f.title} • ${f.dept}`, action: `closeGlobalSearchModal(); openFacultyModal('${f.id}')` });
+            });
+            studentsData.filter(s => s.name.toLowerCase().includes(q) || s.roll.toLowerCase().includes(q)).forEach(s => {
+                results.push({ type: 'Student', title: `${s.name} (${s.roll})`, sub: `${s.program} • CGPA ${s.cgpa}`, action: `closeGlobalSearchModal(); openTranscriptModal('${s.roll}')` });
+            });
+
+            if (results.length === 0) {
+                container.innerHTML = '<p class="text-xs text-slate-500 text-center py-6">No matching institutional records found.</p>';
+                return;
+            }
+
+            container.innerHTML = results.slice(0, 8).map(r => `
+                <button onclick="${r.action}" class="w-full text-left p-3 rounded-xl hover:bg-slate-100 flex items-center justify-between transition-colors">
+                    <div>
+                        <span class="font-semibold text-navy-900 block text-xs sm:text-sm">${r.title}</span>
+                        <span class="text-[11px] text-slate-500">${r.sub}</span>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-blue-50 text-blue-700">${r.type}</span>
+                </button>
+            `).join('');
+        }
+
+        function handleAdmissionSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('adm-name').value.trim();
+            const email = document.getElementById('adm-email').value.trim();
+            const phone = document.getElementById('adm-phone').value.trim();
+            const program = document.getElementById('adm-program').value;
+            const errBox = document.getElementById('admission-error');
+
+            if (!name || !email.includes('@') || !phone || !program) {
+                errBox.textContent = 'Please complete all required fields with a valid email address and preferred program.';
+                errBox.classList.remove('hidden');
+                return;
+            }
+
+            errBox.classList.add('hidden');
+            e.target.reset();
+            showToast(`Thank you, ${name}! Your inquiry for ${program} has been routed to the Admissions Office.`, 'success');
+        }
+
+        function copyEmail(email) {
+            const tempInput = document.createElement('input');
+            tempInput.value = email;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            showToast(`Copied ${email} to clipboard!`, 'success');
+        }
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            const icon = type === 'success' ? 'fa-circle-check text-emerald-400' : type === 'error' ? 'fa-circle-exclamation text-rose-400' : 'fa-circle-info text-blue-400';
+
+            toast.className = 'pointer-events-auto bg-navy-900 text-white text-xs font-medium px-4 py-3.5 rounded-2xl shadow-xl border border-slate-700 flex items-center gap-3 transition-all duration-300';
+            toast.innerHTML = `<i class="fa-solid ${icon} text-base"></i><span class="flex-1 leading-snug">${message}</span>`;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(8px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3800);
+        }
+
+        /* ------------------------------------------
+           10. MOBILE MENU, KEYBOARD SHORTCUTS & SCROLL SPY
+        ------------------------------------------- */
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('mobile-menu-icon');
+            menu.classList.toggle('hidden');
+            icon.className = menu.classList.contains('hidden') ? 'fa-solid fa-bars text-lg' : 'fa-solid fa-xmark text-lg';
+        }
+        function closeMobileMenu() {
+            document.getElementById('mobile-menu').classList.add('hidden');
+            document.getElementById('mobile-menu-icon').className = 'fa-solid fa-bars text-lg';
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+                e.preventDefault();
+                openGlobalSearchModal();
+            } else if (e.key === 'Escape') {
+                closeUniversalModal();
+                closeAddStudentModal();
+                closeGpaCalculatorModal();
+                closeGlobalSearchModal();
+                closePortalDrawer();
+            }
+        });
+
+        // Highlight active section in sticky navbar
+        window.addEventListener('scroll', () => {
+            const sections = ['overview', 'departments', 'courses', 'faculty', 'students', 'events', 'admissions'];
+            let current = 'overview';
+            sections.forEach(id => {
+                const el = document.getElementById(id);
+                if (el && window.scrollY >= el.offsetTop - 130) {
+                    current = id;
+                }
+            });
+            document.querySelectorAll('#desktop-nav .nav-link').forEach(link => {
+                link.classList.toggle('active', link.getAttribute('href') === `#${current}`);
+            });
+        });
+
+        // Initialize All Sections on DOM Ready
+        window.addEventListener('DOMContentLoaded', () => {
+            renderDepartments();
+            filterCourses();
+            filterFaculty();
+            filterStudents();
+            filterEvents('ALL');
+        });
+    </script>
+</body>
+</html>
